@@ -1,9 +1,6 @@
 # modulo-IIV
 comandos modulo IIV
 
-bash: cd: practica#: No existe el fichero o el directorio
-[hugo@localhost comandos]$ cd practica#7
-[hugo@localhost practica#7]$ cat parte-1 
 Paso 1: Instalar NFS en el servidor
 Instalar el servidor NFS:
 En el servidor, instala el paquete nfs-utils:
