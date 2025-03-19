@@ -53,8 +53,9 @@ Agrega la ruta del directorio OS3 y define los permisos de acceso:
 bash
 Copy
 /OS3 *(rw,sync,no_subtree_check)
-/OS3: Ruta del directorio compartido.
 
+
+/OS3: Ruta del directorio compartido.
 *: Permite el acceso a todos los clientes. Puedes restringirlo a una IP o red específica (por ejemplo, 192.168.1.0/24).
 
 rw: Permite lectura y escritura.
