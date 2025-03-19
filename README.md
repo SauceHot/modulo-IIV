@@ -151,3 +151,64 @@ También puedes listar los archivos en el directorio montado:
 bash
 Copy
 ls /mnt/os3_shared
+
+
+
+  sudo dnf install samba -y
+  302  systemctl enable smb
+  303  sudo systemctl ctl start smb
+  304  sudo systemctl start smb
+  305  sudo systemctl enable nmb
+  306  sudo systemctl start nmb
+  307  sudo systemctl status nmb
+  308  sudo systemctl status smb
+  309  sudo mkdir -p /samba
+  310  cd /samba/
+  311  ls
+  312  sudo tocuh adrian{1..100}.txt
+  313  ls
+  314  sudo touch adrian{1..100}.txt
+  315  ls
+  316  sudo chown hugo:hugo
+  317  sudo chown hugo
+  318  sudo chown hugo:hugo
+  319  sudo chown -R hugo:hugo *
+  320  sudo chown hugo *
+  321  sudo chown 666 *
+  322  ls -l
+  323  sudo chown 666 *
+  324  ls -l
+  325  sudo chmod 666 *
+  326  ls -l
+  327  sudo chown nobody:nobody /samba
+  328  sudo chmod -R 0775 /samba
+  329  sudo groupadd sambagroup
+  330  sudo useradd -M -d /samba -s /sbin/nologin hugosmb
+  331  sudo smb passwd -a hugosmb
+  332  sudo smbpasswd -a hugosmb
+  333  sudo usermod -aG sambagroup hugosmb
+  334  ls
+  335  sudo usermod -aG sambagroup hugosmb /samba
+  336  sudo usermod -aG sambagroup hugosmb/samba
+  337  sudo usermod -aG sambagroup hugosmb /samba
+  338  sudo usermod -aG sambagroup hugosmb 
+  339  id hugosmb
+  340  sudo chown -R :sambagroup /samba
+  341  sudo nano /etc/samba/smb.conf
+  342  sudo systemctl restart smb
+  343  sudo systemctl restart nmb
+  344  sudo firewall-cmd --add-port=137/tcp --permanent
+  345  sudo firewall-cmd --add-port=139/tcp --permanent
+  346  sudo firewall-cmd --add-port=445/tcp --permanent
+  347  sudo firewall-cmd reload
+  348  sudo firewall-cmd relload
+  349  sudo firewall-cmd --reload
+  350  firewall
+  351  firewall-cmd --list /all
+  352  firewall-cmd --list-all
+  353  sudo setenforce 0
+  354  cd /samba
+  355  ls -l 
+  356  cat adrian99.txt 
+  357  date
+
