@@ -156,7 +156,7 @@ ls /mnt/os3_shared
 
   sudo dnf install samba -y
   302  systemctl enable smb
-  303  sudo systemctl ctl start smb
+  303  systemctl enable smb
   304  sudo systemctl start smb
   305  sudo systemctl enable nmb
   306  sudo systemctl start nmb
@@ -210,5 +210,123 @@ ls /mnt/os3_shared
   354  cd /samba
   355  ls -l 
   356  cat adrian99.txt 
-  357  date
 
+------------------------------------Paso 1: Crear un usuario en Linux y agregarlo a SAMBA
+Crear el usuario lanegracubana:
+Crea un usuario en Linux llamado lanegracubana y establece su contraseña (usando tu matrícula):
+
+bash
+Copy
+sudo useradd -m lanegracubana
+sudo passwd lanegracubana
+Agregar el usuario a SAMBA:
+Agrega el usuario lanegracubana a SAMBA y establece una contraseña:
+
+bash
+Copy
+sudo smbpasswd -a lanegracubana
+Se te pedirá que ingreses una contraseña. Usa tu matrícula como contraseña.
+
+Verificar que el usuario esté en SAMBA:
+Lista los usuarios de SAMBA para asegurarte de que lanegracubana esté registrado:
+
+bash
+Copy
+sudo pdbedit -L
+Paso 2: Instalar y configurar SAMBA 4 como Controlador de Dominio
+Instalar SAMBA 4:
+Instala SAMBA 4 y las dependencias necesarias:
+
+bash
+Copy
+sudo dnf install samba samba-dc samba-client -y
+Configurar SAMBA como Controlador de Dominio:
+
+Detén el servicio SAMBA si está en ejecución:
+
+bash
+Copy
+sudo systemctl stop smb
+sudo systemctl stop nmb
+Elimina la configuración existente de SAMBA (si la hay):
+
+bash
+Copy
+sudo rm -rf /etc/samba/smb.conf
+Configura SAMBA como Controlador de Dominio:
+
+bash
+Copy
+sudo samba-tool domain provision --use-rfc2307 --interactive
+Durante la configuración, proporciona la siguiente información:
+
+Realm: SO3.inet (el nombre del dominio).
+
+Domain: SO3 (el nombre corto del dominio).
+
+Server Role: dc (Controlador de Dominio).
+
+DNS Backend: SAMBA_INTERNAL (usar el DNS interno de SAMBA).
+
+Administrator Password: Establece una contraseña segura para el administrador del dominio.
+
+Iniciar el servicio SAMBA:
+Una vez configurado, inicia el servicio SAMBA:
+
+bash
+Copy
+sudo systemctl start samba-ad-dc
+sudo systemctl enable samba-ad-dc
+Verificar el estado del Controlador de Dominio:
+Verifica que el Controlador de Dominio esté funcionando correctamente:
+
+bash
+Copy
+sudo samba-tool domain level show
+Paso 3: Unir la máquina virtual Windows al dominio
+Configurar la red en Windows:
+
+Asegúrate de que la máquina virtual Windows esté en la misma red que el servidor SAMBA.
+
+Configura la dirección IP del servidor SAMBA como el DNS primario en la configuración de red de Windows.
+
+Unir la máquina Windows al dominio:
+
+Abre el Panel de Control en Windows.
+
+Ve a Sistema y Seguridad > Sistema.
+
+Haz clic en Cambiar configuración al lado de "Nombre del equipo, dominio y configuración del grupo de trabajo".
+
+En la pestaña Nombre de equipo, haz clic en Cambiar.
+
+Selecciona Dominio e ingresa el nombre del dominio (SO3.inet).
+
+Haz clic en Aceptar.
+
+Autenticar con el usuario lanegracubana:
+
+Cuando se te solicite, ingresa las credenciales del usuario lanegracubana que creaste en SAMBA.
+
+Usa el formato SO3\lanegracubana para el nombre de usuario y tu matrícula como contraseña.
+
+Reiniciar la máquina Windows:
+
+Reinicia la máquina Windows para aplicar los cambios.
+
+Después del reinicio, inicia sesión en el dominio con el usuario lanegracubana.
+
+Paso 4: Verificar la unión al dominio
+Iniciar sesión en el dominio:
+
+En la pantalla de inicio de sesión de Windows, selecciona el dominio SO3.inet e ingresa las credenciales de lanegracubana.
+
+Verificar la pertenencia al dominio:
+
+Abre el Panel de Control y ve a Sistema y Seguridad > Sistema.
+
+Verifica que el equipo esté unido al dominio SO3.inet.
+
+Probar la autenticación:
+
+Intenta acceder a recursos compartidos en el servidor SAMBA desde Windows usando el usuario lanegracubana.
