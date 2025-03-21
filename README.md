@@ -1,5 +1,5 @@
-# modulo-IIV
-comandos modulo IIV
+# modulo-VII
+comandos modulo VII
 
 Paso 1: Instalar NFS en el servidor
 Instalar el servidor NFS:
